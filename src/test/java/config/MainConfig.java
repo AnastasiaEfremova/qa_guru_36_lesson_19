@@ -17,9 +17,6 @@ public interface MainConfig extends Config {
     @Key("remoteUrl")
     String remoteUrl();
 
-    @Key("app")
-    String app();
-
     @Key("app.browserstack")
     String appBrowserstack();
 
