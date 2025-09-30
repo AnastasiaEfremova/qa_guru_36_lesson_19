@@ -4,9 +4,9 @@ import org.aeonbits.owner.Config;
 
 @Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.Sources({
-        "classpath:android.properties"
+        "classpath:main.properties"
 })
-public interface BrowserstackConfig extends Config {
+public interface MainConfig extends Config {
 
     @Key("userName")
     String userName();
@@ -19,10 +19,4 @@ public interface BrowserstackConfig extends Config {
 
     @Key("app")
     String app();
-
-    @Key("device")
-    String device();
-
-    @Key("osVersion")
-    String osVersion();
 }

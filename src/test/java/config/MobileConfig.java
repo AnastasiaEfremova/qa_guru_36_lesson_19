@@ -6,19 +6,7 @@ import org.aeonbits.owner.Config;
 @Config.Sources({
         "classpath:android.properties"
 })
-public interface BrowserstackConfig extends Config {
-
-    @Key("userName")
-    String userName();
-
-    @Key("accessKey")
-    String accessKey();
-
-    @Key("remoteUrl")
-    String remoteUrl();
-
-    @Key("app")
-    String app();
+public interface MobileConfig extends Config {
 
     @Key("device")
     String device();
