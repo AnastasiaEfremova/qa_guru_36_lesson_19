@@ -7,12 +7,13 @@ import screens.OnboardingScreen;
 import static io.qameta.allure.Allure.step;
 
 public class WikipediaAppTests extends TestBase {
+
     OnboardingScreen welcomeFlow = new OnboardingScreen();
 
     @Test
-    @DisplayName("Полная проверка процесса онбординга")
+    @DisplayName("Complete onboarding process validation")
     void completeOnboardingValidation() {
-        step("Проверка экрана приветствия", () -> {
+        step("Verify welcome screen", () -> {
             welcomeFlow.verifyWelcomeTitle()
                     .validateLanguagesCount(1)
                     .searchForLanguage("English")
@@ -21,35 +22,35 @@ public class WikipediaAppTests extends TestBase {
                     .proceedToNextStep();
         });
 
-        step("Проверка экрана возможностей", () -> {
+        step("Verify discovery features screen", () -> {
             welcomeFlow.verifyDiscoveryTitle()
                     .confirmSkipOptionVisible()
                     .proceedToNextStep();
         });
 
-        step("Проверка экрана закладок", () -> {
+        step("Verify bookmarks screen", () -> {
             welcomeFlow.verifyBookmarksTitle()
                     .confirmSkipOptionVisible()
                     .proceedToNextStep();
         });
 
-        step("Проверка экрана конфиденциальности", () -> {
+        step("Verify privacy screen", () -> {
             welcomeFlow.verifyPrivacyTitle()
                     .verifyStartButtonPresent();
         });
     }
 
     @Test
-    @DisplayName("Валидация языковых настроек")
+    @DisplayName("Language settings validation")
     void languageSettingsValidation() {
-        step("Проверяем начальные языковые настройки", () -> {
+        step("Check initial language settings", () -> {
             welcomeFlow.verifyWelcomeTitle()
                     .validateLanguagesCount(1)
                     .searchForLanguage("English")
                     .checkLanguageSettingsButton();
         });
 
-        step("Проверяем возможность добавления языков", () -> {
+        step("Verify language addition capability", () -> {
             welcomeFlow.checkLanguageSettingsButton();
         });
     }

@@ -3,8 +3,7 @@ package config;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
-        "file:src/test/resources/${deviceHost}.properties",
-        "file:src/test/resources/local.properties"
+        "classpath:main.properties"
 })
 public interface AppConfig extends Config {
 

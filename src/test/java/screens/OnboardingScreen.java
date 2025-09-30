@@ -4,7 +4,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -72,12 +71,6 @@ public class OnboardingScreen {
 
     public OnboardingScreen checkLanguageSettingsButton() {
         languageManagementBtn.shouldHave(text("Add or edit languages"));
-        return this;
-    }
-
-    public OnboardingScreen verifyAllElementsInteractive() {
-        mainTitle.shouldBe(visible);
-        nextStepButton.shouldBe(enabled);
         return this;
     }
 }

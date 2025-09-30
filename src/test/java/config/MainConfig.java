@@ -19,4 +19,15 @@ public interface MainConfig extends Config {
 
     @Key("app")
     String app();
+
+    @Key("app.browserstack")
+    String appBrowserstack();
+
+    @Key("device")
+    String device();
+
+    @Key("osVersion")
+    String osVersion();
+
+
 }
