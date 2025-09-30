@@ -51,7 +51,10 @@ test {
 }
 
 tasks.withType(Test) {
+    useJUnitPlatform()
     systemProperty "console.encoding", "UTF-8"
+    systemProperties(System.getProperties())
+
     testLogging {
         events "started", "skipped", "failed", "standard_error", "standard_out"
         exceptionFormat "short"
@@ -59,14 +62,16 @@ tasks.withType(Test) {
     }
 }
 
-tasks.register('browserstack_tests', Test) {
-    useJUnitPlatform {
-        includeTags("browserstack")
-    }
+tasks.register('testEmulator', Test) {
+    systemProperty 'deviceHost', 'emulator'
+    dependsOn testClasses
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
 }
 
-tasks.register('emulation_tests', Test) {
-    useJUnitPlatform {
-        includeTags("emulation")
-    }
+tasks.register('testBrowserstack', Test) {
+    systemProperty 'deviceHost', 'browserstack'
+    dependsOn testClasses
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
 }

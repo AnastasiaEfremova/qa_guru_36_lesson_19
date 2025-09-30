@@ -1,8 +1,7 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
-import config.MainConfig;
-import config.MobileConfig;
+import config.BrowserstackConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
@@ -15,28 +14,33 @@ import java.net.URL;
 
 public class BrowserstackDriver implements WebDriverProvider {
 
-    private final MainConfig mainConfig = ConfigFactory.create(MainConfig.class, System.getProperties());
-    private final MobileConfig mobileConfig = ConfigFactory.create(MobileConfig.class, System.getProperties());
+    private final BrowserstackConfig browserstackConfig = ConfigFactory.create(BrowserstackConfig.class, System.getProperties());
 
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
         MutableCapabilities caps = new MutableCapabilities();
 
-        caps.setCapability("browserstack.user", mainConfig.userName());
-        caps.setCapability("browserstack.key", mainConfig.accessKey());
-        caps.setCapability("app", mainConfig.app());
-        caps.setCapability("device", mobileConfig.device());
-        caps.setCapability("os_version", mobileConfig.osVersion());
+        caps.setCapability("appium:deviceName", browserstackConfig.device());
+        caps.setCapability("appium:platformVersion", browserstackConfig.osVersion());
+        caps.setCapability("platformName", "Android");
+        caps.setCapability("appium:app", browserstackConfig.app());
+        caps.setCapability("appium:automationName", "UiAutomator2");
 
-        caps.setCapability("project", "Wikipedia Android Tests");
-        caps.setCapability("build", "browserstack-build-1");
-        caps.setCapability("name", "Onboarding Tests");
+        MutableCapabilities bstackOptions = new MutableCapabilities();
+        bstackOptions.setCapability("userName", browserstackConfig.userName());
+        bstackOptions.setCapability("accessKey", browserstackConfig.accessKey());
+        bstackOptions.setCapability("projectName", "Wikipedia Android Tests");
+        bstackOptions.setCapability("buildName", "browserstack-build-1");
+        bstackOptions.setCapability("sessionName", "Onboarding Tests");
+        bstackOptions.setCapability("appiumVersion", "2.19.0");
+
+        caps.setCapability("bstack:options", bstackOptions);
 
         try {
-            return new RemoteWebDriver(new URL(mainConfig.remoteUrl()), caps);
+            return new RemoteWebDriver(new URL(browserstackConfig.remoteUrl()), caps);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Malformed remote URL", e);
         }
     }
 }

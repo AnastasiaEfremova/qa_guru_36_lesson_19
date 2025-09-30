@@ -41,7 +41,6 @@ public class OnboardingScreen {
 
     @Step("Verify screen content (partial match)")
     public OnboardingScreen verifyScreenContentPartial(String expectedPrimary, String expectedSecondary) {
-        // Using partial text matching
         primaryText.shouldBe(visible).shouldHave(partialText(expectedPrimary));
         secondaryText.shouldBe(visible).shouldHave(partialText(expectedSecondary));
         return this;
