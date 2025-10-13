@@ -2,41 +2,44 @@ package tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import screens.OnboardingScreen;
+import screens.WelcomeScreen;
+import screens.DiscoveryScreen;
+import screens.BookmarksScreen;
+import screens.PrivacyScreen;
+import screens.LanguageSettingsScreen;
 
 import static io.qameta.allure.Allure.step;
 
 public class WikipediaAppTests extends TestBase {
 
-    OnboardingScreen welcomeFlow = new OnboardingScreen();
-
     @Test
     @DisplayName("Complete onboarding process validation")
     void completeOnboardingValidation() {
         step("Verify welcome screen", () -> {
-            welcomeFlow.verifyWelcomeTitle()
-                    .validateLanguagesCount(1)
-                    .searchForLanguage("English")
-                    .checkLanguageSettingsButton()
+            DiscoveryScreen discoveryScreen = new WelcomeScreen()
+                    .verifyWelcomeTitle()
                     .confirmSkipOptionVisible()
                     .proceedToNextStep();
-        });
 
-        step("Verify discovery features screen", () -> {
-            welcomeFlow.verifyDiscoveryTitle()
-                    .confirmSkipOptionVisible()
-                    .proceedToNextStep();
-        });
+            step("Verify discovery features screen", () -> {
+                BookmarksScreen bookmarksScreen = discoveryScreen
+                        .verifyDiscoveryTitle()
+                        .confirmSkipOptionVisible()
+                        .proceedToNextStep();
 
-        step("Verify bookmarks screen", () -> {
-            welcomeFlow.verifyBookmarksTitle()
-                    .confirmSkipOptionVisible()
-                    .proceedToNextStep();
-        });
+                step("Verify bookmarks screen", () -> {
+                    PrivacyScreen privacyScreen = bookmarksScreen
+                            .verifyBookmarksTitle()
+                            .confirmSkipOptionVisible()
+                            .proceedToNextStep();
 
-        step("Verify privacy screen", () -> {
-            welcomeFlow.verifyPrivacyTitle()
-                    .verifyStartButtonPresent();
+                    step("Verify privacy screen", () -> {
+                        privacyScreen
+                                .verifyPrivacyTitle()
+                                .verifyStartButtonPresent();
+                    });
+                });
+            });
         });
     }
 
@@ -44,14 +47,14 @@ public class WikipediaAppTests extends TestBase {
     @DisplayName("Language settings validation")
     void languageSettingsValidation() {
         step("Check initial language settings", () -> {
-            welcomeFlow.verifyWelcomeTitle()
-                    .validateLanguagesCount(1)
-                    .searchForLanguage("English")
-                    .checkLanguageSettingsButton();
-        });
+            WelcomeScreen welcomeScreen = new WelcomeScreen();
+            LanguageSettingsScreen languageSettings = new LanguageSettingsScreen();
 
-        step("Verify language addition capability", () -> {
-            welcomeFlow.checkLanguageSettingsButton();
+            welcomeScreen.verifyWelcomeTitle();
+            languageSettings
+                    .validateLanguagesCount(1)
+                    .searchForLanguage("English");
+            welcomeScreen.checkLanguageSettingsButton();
         });
     }
 }
